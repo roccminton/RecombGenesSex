@@ -20,11 +20,9 @@ You can reproduce the findings presented in the paper using the provided code. T
 4. Execute the function `dosimulation(N,dni,filename,abs_path)`
 5. The function arguments are as follows
 
-| variable   | description                                                                                         
-|
+| variable   | description                                                                                             |
 |------------|---------------------------------------------------------------------------------------------------------|
-| N          | number of genes                                                                                         
-|
+| N          | number of genes                                                                                         |
 | dni        | genome-wide mutation rate                                                                               |
 | filename   | name of the output file                                                                                 |
 | abs_path   | path where the output should be saved                                                                   |
