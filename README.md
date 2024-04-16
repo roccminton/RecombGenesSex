@@ -35,8 +35,8 @@ You can reproduce the findings presented in the paper using the provided code. T
 | birthrates = "allbirthrates!" | Choose between "allbirthrates!" (const. population size) and "truerates!" (fluctuation population size) |
 | nruns = 3                     | Number of independent runs of the simulation                                                            |
 
-Only N,dni,filename and abs_path are mandatory argument names. The others have a default value as shown.
-The output of the simulations is safed in a seperate file for each run and an overview plot over the summery statistics - mutation burden and prevalence - is saved in one pdf file for all runs together.
+Only N,dni,filename and abs_path are mandatory variables. The others are optional and have a default value as shown.
+The output of the simulations is safed in a seperate file for each run and an overview plot over the summery statistics (mutation burden and prevalence) is saved in one pdf file for all runs together.
 
 **Remark:** Depending on the parameter configurations and the length of the simulations, one run can take up to 24 hours. Especially after the increase in mutation burden, the simulations slow down significantly.
 
