@@ -10,12 +10,30 @@ You can reproduce the findings presented in the paper using the provided code. T
 
 ## Contents
 - `code/`: Contains the code for simulations and analysis.
-- `data/`: Contains the data used in the simulations.
+- `data/`: Contains the data to create the figures in the paper.
+- `figures/`: Contains the files to generate the figures in the paper.
 
 ## Usage
 1. Clone this repository.
 2. Navigate to the `code/` directory.
-3. Run the scripts to reproduce the simulations and analyses presented in the paper.
+3. Include the file `runandsafe_IBM.jl` into a Julia script.
+4. Execute the function `dosimulation(N,dni,filename,abs_path)`
+5. The function arguments are as follows
+
+| N          | number of genes                                                                                         
+|
+| dni        | genome-wide mutation rate                                                                               |
+| filename   | name of the output file                                                                                 |
+| abs_path   | path where the output should be saved                                                                   |
+|------------|---------------------------------------------------------------------------------------------------------|
+| K          | total population size                                                                                   |
+| tend       | length of simulation (in generations)                                                                   |
+| b          | individual birth rate                                                                                   |
+| d          | individual death rate                                                                                   |
+| c          | competition between individual (c=nothing results in uniform competition)                               |
+| rec        | Recombination rate between 0 (no recombinaton) and 1 (full recombination)                               |
+| birthrates | Choose between "allbirthrates!" (const. population size) and "truerates!" (fluctuation population size) |
+| nruns      | Number of independent runs of the simulation                                                            |
 
 ## Citation
 If you use the code or data from this repository in your research, please cite the paper:
