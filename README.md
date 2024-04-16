@@ -20,20 +20,25 @@ You can reproduce the findings presented in the paper using the provided code. T
 4. Execute the function `dosimulation(N,dni,filename,abs_path)`
 5. The function arguments are as follows
 
-| variable   | description                                                                                             |
-|------------|---------------------------------------------------------------------------------------------------------|
-| N          | number of genes                                                                                         |
-| dni        | genome-wide mutation rate                                                                               |
-| filename   | name of the output file                                                                                 |
-| abs_path   | path where the output should be saved                                                                   |
-| K          | total population size                                                                                   |
-| tend       | length of simulation (in generations)                                                                   |
-| b          | individual birth rate                                                                                   |
-| d          | individual death rate                                                                                   |
-| c          | competition between individual (c=nothing results in uniform competition)                               |
-| rec        | Recombination rate between 0 (no recombinaton) and 1 (full recombination)                               |
-| birthrates | Choose between "allbirthrates!" (const. population size) and "truerates!" (fluctuation population size) |
-| nruns      | Number of independent runs of the simulation                                                            |
+| variable                      | description                                                                                             |
+|-------------------------------|---------------------------------------------------------------------------------------------------------|
+| N                             | number of genes                                                                                         |
+| dni                           | genome-wide mutation rate                                                                               |
+| filename                      | name of the output file                                                                                 |
+| abs_path                      | path where the output should be saved                                                                   |
+| K = 10_000                    | total population size                                                                                   |
+| tend = 100_000                | length of simulation (in generations)                                                                   |
+| b = 1.0                       | individual birth rate                                                                                   |
+| d = 0.9                       | individual death rate                                                                                   |
+| c = nothing                   | competition between individual (c=nothing results in uniform competition)                               |
+| rec = 0                       | Recombination rate between 0 (no recombinaton) and 1 (full recombination)                               |
+| birthrates = "allbirthrates!" | Choose between "allbirthrates!" (const. population size) and "truerates!" (fluctuation population size) |
+| nruns = 3                     | Number of independent runs of the simulation                                                            |
+
+Only N,dni,filename and abs_path are mandatory argument names. The others have a default value as shown.
+The output of the simulations is safed in a seperate file for each run and an overview plot over the summery statistics - mutation burden and prevalence - is saved in one pdf file for all runs together.
+
+**Remark:** Depending on the parameter configurations and the length of the simulations, one run can take up to 24 hours. Especially after the increase in mutation burden, the simulations slow down significantly.
 
 ## Citation
 If you use the code or data from this repository in your research, please cite the paper:
