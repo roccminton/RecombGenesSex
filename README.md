@@ -10,8 +10,8 @@ You can reproduce the findings presented in the paper using the provided code. T
 
 ## Contents
 - `code/`: Contains the code for simulations and analysis.
-- `data/`: Contains the data to create the figures in the paper.
-- `figures/`: Contains the files to generate the figures in the paper.
+- `data/`: Contains some further processed, summarized data. Raw data can be reproduced with the code itself and is typically too large for a Git repository..
+- `figures/`: Contains the figures itselfe and the files to generate the figures presented in the paper.
 
 ## Usage
 1. Clone this repository.
@@ -39,6 +39,29 @@ Only N,dni,filename and abs_path are mandatory variables. The others are optiona
 The output of the simulations is safed in a seperate file for each run and an overview plot over the summery statistics (mutation burden and prevalence) is saved in one pdf file for all runs together.
 
 **Remark:** Depending on the parameter configurations and the length of the simulations, one run can take up to 24 hours. Especially after the increase in mutation burden, the simulations slow down significantly.
+
+## Data Structure
+This repository contains a program that generates data and saves it under a specified path as a .jld file. The generated data consists of a dictionary containing various relevant information. The saved data includes:
+
+### Parameters
+- "\mu": Mutation rate
+- "competition": Competitive pressure between individuals
+- "birth": Individual birth rate
+- "Nloci": Number of recessive genes
+- "rates": Choice of birth rate (constant vs. fluctuating population size)
+- "historylength": Total length of the simulation (in generations)
+- "K": Carrying capacity of the system
+- "ccuts": Recombination cuts
+- "death": Individual death rate
+- "recombination": Recombination rate
+
+### Statistics
+- "PopSize": Population size
+- "Ill": Absolute number of individuals expressing a recessive genetic disease
+- "ML": Absolute number of lethal equivalents in the entire population
+
+### Snapshots
+Snapshots of a randomly selected sample of gametes of the population are taken at selected time points. The time points are saved in "savesnap", and the size of the sample in "samplesize". Individual snapshots are stored in a 3d matrix of size Nloci x samplesize x historylength under "SnapShots".
 
 ## Citation
 If you use the code or data from this repository in your research, please cite the paper:
