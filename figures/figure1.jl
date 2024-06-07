@@ -14,7 +14,7 @@ due to its large size. However, you can generate the data on your own by executi
 the following function, while including the 'runandsaveIBM.jl' file.
 
     dosimulation(600,0.05,"N=$N,dni=$dni",abs_path)
-    
+
 Be aware though that executing this function may take some time.
 =#
 
@@ -199,57 +199,51 @@ end
 
 function addBrackets!(f,ts,te,times)
     #add curly brackets and names
-    axbox = Axis(f,bbox=BBox(65,1426,1020,1170))
+    axbox = Axis(f,bbox=BBox(105,1375,1020,1170))
     xlims!(axbox,(ts,te))
     ylims!(axbox,(0,1))
     hidespines!(axbox)
     hidedecorations!(axbox)
-    bg = 3_575
-    sg = 1_500
-    fw = 29_900
-    bpoints = [
-        (Point2f(bg+(i-1)*(fw+sg),0),Point2f(bg+i*fw+(i-1)*sg,0)) for i in 1:3
-    ]
     for (i,T) in enumerate(times)
         bracket!(axbox,T[1],.5,T[end],.5;orientation=:down,text=L"T_{%$i}")
     end
 end
 
-#Load Data
-#---
-#loading the data will not work on other machines, see above remark
-d = load("/media/larocca/PortableSSD/Data/NoRecombination/LoadClassDistribution/N=600,dni=0.05_long_3.jld")
-
+#parameters
 N=600
-
-#Collect Data
-#---
-
 #start and end of plot window
 ts = 0
 te = 80_000
+#reload?
+reload = false
 
-#find extinction events
-extimes = findextimes(d)
+#Load Data
+#---
+if reload
+    #loading the data will not work on other machines, see above remark
+    d = load("/media/larocca/PortableSSD/Data/NoRecombination/LoadClassDistribution/N=600,dni=0.05_long_3.jld")
 
-#set time frames for zoom and correlation matrixes
-t_C2 = 40_000
-times_AB = [2500:7500,12000:17000,extimes[end]-2500:extimes[end]+2500]
-times_C = copy(times_AB) ; times_C[2]=t_C2:t_C2
+    #Collect Data
+    #find extinction events
+    extimes = findextimes(d)
+    #set time frames for zoom and correlation matrixes
+    t_C2 = 40_000
+    times_AB = [2500:7500,12000:17000,extimes[end]-2500:extimes[end]+2500]
+    times_C = copy(times_AB) ; times_C[2]=t_C2:t_C2
 
-#maximum number of mutation per haploid genome
-N_max = maximum(maximum(findlast(!iszero,d["LoadHist"][:,t]) for t in T) for T in times_AB)
-#collect corrmatrix and loadpositions
-println("Calculating covariance matrices ... ")
-cormatrixs = [meanr2(d,N,time_to_sampleinds(int,d["savesnap"])) for int in times_C]
-loadpos = vec.([mean(d["LoadPos"][:, int], dims = 2) ./ d["K"] for int in times_C])
-#reorder matrix and vector to better see cluster
-for i in 2:3
-    cluster = findcluster(cormatrixs[i])
-    cormatrixs[i] = sortcormatrix(cormatrixs[i],cluster)
-    loadpos[i] = sortloadpos(loadpos[i],cluster)
+    #maximum number of mutation per haploid genome
+    N_max = maximum(maximum(findlast(!iszero,d["LoadHist"][:,t]) for t in T) for T in times_AB)
+    #collect corrmatrix and loadpositions
+    println("Calculating covariance matrices ... ")
+    cormatrixs = [meanr2(d,N,time_to_sampleinds(int,d["savesnap"])) for int in times_C]
+    loadpos = vec.([mean(d["LoadPos"][:, int], dims = 2) ./ d["K"] for int in times_C])
+    #reorder matrix and vector to better see cluster
+    for i in 2:3
+        cluster = findcluster(cormatrixs[i])
+        cormatrixs[i] = sortcormatrix(cormatrixs[i],cluster)
+        loadpos[i] = sortloadpos(loadpos[i],cluster)
+    end
 end
-
 #Generate Figure
 #---
 println("Generating figure...")
